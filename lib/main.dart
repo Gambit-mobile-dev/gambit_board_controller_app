@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gambit_board_controller_app/pages/signupScreen.dart';
 import 'pages/loginScreen.dart';
+import 'pages/signupScreen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Gambit',
         debugShowCheckedModeBanner:false,
-        home: LoginScreen());
+        home: SignupScreen());
 
   }
 }
