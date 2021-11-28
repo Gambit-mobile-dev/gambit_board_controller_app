@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gambit_board_controller_app/pages/signupScreen.dart';
-import 'pages/loginScreen.dart';
-import 'pages/signupScreen.dart';
+import 'pages/welcome_page.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -18,9 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Gambit',
         debugShowCheckedModeBanner:false,
-        home: SignupScreen());
-
+        title: 'Gambit',
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primarySwatch:Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: const WelcomePage() );
   }
 }
