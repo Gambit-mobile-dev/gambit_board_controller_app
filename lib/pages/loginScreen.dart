@@ -32,9 +32,11 @@ class _LoginScreenState extends State<LoginScreen> {
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
                 border: InputBorder.none,
-                prefixIcon: Icon(Icons.email, color: Color.fromRGBO(72, 139, 254, 100)),
+                prefixIcon:
+                    Icon(Icons.email, color: Color.fromRGBO(72, 139, 254, 100)),
                 hintText: 'Email',
-                hintStyle: TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
+                hintStyle:
+                    TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
           ),
         )
       ],
@@ -61,9 +63,11 @@ class _LoginScreenState extends State<LoginScreen> {
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
                 border: InputBorder.none,
-                prefixIcon: Icon(Icons.lock, color: Color.fromRGBO(72, 139, 254, 100)),
+                prefixIcon:
+                    Icon(Icons.lock, color: Color.fromRGBO(72, 139, 254, 100)),
                 hintText: 'Password',
-                hintStyle: TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
+                hintStyle:
+                    TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
           ),
         )
       ],
@@ -77,9 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () => print("Forgot Password pressed"),
         child: Text(
           'Забыли пароль?',
-          style: TextStyle(
-              color: Colors.black54,
-              fontStyle: FontStyle.italic),
+          style: TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),
         ),
       ),
     );
@@ -128,16 +130,14 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-                side: BorderSide(
-                    color: Color.fromRGBO(72, 139, 254, 100),
-                    width: 3)
-              )
-            )
-          ),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.transparent),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      side: BorderSide(
+                          color: Color.fromRGBO(72, 139, 254, 100),
+                          width: 3)))),
         ));
   }
 
@@ -149,9 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: () => print("Forgot Password pressed"),
           child: Text(
             'Войти через Google',
-            style: TextStyle(
-                color: Colors.black54,
-                fontStyle: FontStyle.italic),
+            style:
+                TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),
           ),
         ),
         Image.asset('assets/pictures/googleIcon.png'),
@@ -174,71 +173,73 @@ class _LoginScreenState extends State<LoginScreen> {
   //       );
   // }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text('АВТОРИЗАЦИЯ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontFamily: 'Yeseva',
+              )),
+          centerTitle: true,
+          backgroundColor: Color.fromRGBO(230, 230, 230, 100),
+        ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: GestureDetector(
               child: Stack(
-                children: <Widget>[
-                  Center(
-                     child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 25),
-                        height: double.infinity,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color.fromRGBO(230, 230, 230, 100),
-                        ),
-                        child: SingleChildScrollView(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          padding: EdgeInsets.symmetric(horizontal: 25),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                margin: const EdgeInsets.only(top: 14, bottom: 14),
-                                  child: Image.asset('assets/pictures/logo.png')),
-                              Text('АВТОРИЗАЦИЯ',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontFamily: 'Yeseva',
-                                      )),
-                              SizedBox(height: 30),
-                              buildEmail(),
-                              SizedBox(height: 20),
-                              buildPassword(),
-                              buildForgotPassBtn(),
-                              // buildRememberCb(),
-                              buildLoginBtn(),
-                              buildGoogleAuth(),
-                              Container(
-                                margin: const EdgeInsets.only(top: 60),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacementNamed(context, '/signup');
-                                  },
-                                  child: Text(
-                                    'Регистрация',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontSize: 18,
-                                      color: Color.fromRGBO(87, 72, 254, 100),
-                                      ),
-                                  ),
-                                ),
-                              ),
-                            ],
+            children: <Widget>[
+              Center(
+                  child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 25),
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color.fromRGBO(230, 230, 230, 100),
+                ),
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                          margin: const EdgeInsets.only(top: 14, bottom: 14),
+                          child: Image.asset('assets/pictures/logo.png')),
+                      SizedBox(height: 30),
+                      buildEmail(),
+                      SizedBox(height: 20),
+                      buildPassword(),
+                      buildForgotPassBtn(),
+                      // buildRememberCb(),
+                      buildLoginBtn(),
+                      buildGoogleAuth(),
+                      Container(
+                        margin: const EdgeInsets.only(top: 60),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/signup');
+                          },
+                          child: Text(
+                            'Регистрация',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 18,
+                              color: Color.fromRGBO(87, 72, 254, 100),
+                            ),
                           ),
                         ),
-                      )
-                  )
-                ],
-              )),
-        )
-    );
+                      ),
+                    ],
+                  ),
+                ),
+              ))
+            ],
+          )),
+        ));
   }
 }

@@ -10,7 +10,6 @@ class SignupScreenUserData extends StatefulWidget {
 }
 
 class _SignupScreenUserDataState extends State<SignupScreenUserData> {
-
   DateTime selectedDate = DateTime.now();
   TextEditingController _date = new TextEditingController();
 
@@ -23,7 +22,8 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
     if (birth_date != null && birth_date != selectedDate)
       setState(() {
         selectedDate = birth_date;
-        _date.value = TextEditingValue(text: '${birth_date.day}-${birth_date.month}-${birth_date.year}');
+        _date.value = TextEditingValue(
+            text: '${birth_date.day}-${birth_date.month}-${birth_date.year}');
       });
   }
 
@@ -71,10 +71,11 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
             keyboardType: TextInputType.text,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(left: 20),
+                contentPadding: const EdgeInsets.only(left: 20),
                 border: InputBorder.none,
                 hintText: 'ФИО',
-                hintStyle: TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
+                hintStyle:
+                    TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
           ),
         )
       ],
@@ -103,7 +104,8 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
                 contentPadding: const EdgeInsets.only(left: 20),
                 border: InputBorder.none,
                 hintText: 'Email',
-                hintStyle: TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
+                hintStyle:
+                    TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
           ),
         )
       ],
@@ -132,7 +134,8 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
                 contentPadding: const EdgeInsets.only(left: 20),
                 border: InputBorder.none,
                 hintText: 'Имя пользователя',
-                hintStyle: TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
+                hintStyle:
+                    TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
           ),
         )
       ],
@@ -164,7 +167,8 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
                   contentPadding: const EdgeInsets.only(left: 10),
                   border: InputBorder.none,
                   hintText: 'Дата рождения',
-                  hintStyle: TextStyle(color: Color.fromRGBO(113, 109, 108, 100)),
+                  hintStyle:
+                      TextStyle(color: Color.fromRGBO(113, 109, 108, 100)),
                 ),
               ),
             ),
@@ -196,7 +200,8 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
                 contentPadding: const EdgeInsets.only(left: 20),
                 border: InputBorder.none,
                 hintText: 'Номер телефона',
-                hintStyle: TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
+                hintStyle:
+                    TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
           ),
         )
       ],
@@ -209,7 +214,9 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
         width: double.infinity,
         height: 50,
         child: TextButton(
-          onPressed: () => print('Login Pressed'),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreenUserPassword()));
+          },
           child: Text(
             'Продолжить',
             style: TextStyle(
@@ -219,22 +226,202 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
             ),
           ),
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.transparent),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100),
                       side: BorderSide(
                           color: Color.fromRGBO(72, 139, 254, 100),
-                          width: 3)
-                  )
-              )
-          ),
+                          width: 3)))),
         ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: Text('РЕГИСТРАЦИЯ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontFamily: 'Yeseva',
+              )),
+          centerTitle: true,
+          backgroundColor: Color.fromRGBO(230, 230, 230, 100),
+        ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: GestureDetector(
+              child: Stack(
+            children: <Widget>[
+              Center(
+                  child: Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 25),
+                height: double.infinity,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Color.fromRGBO(230, 230, 230, 100),
+                ),
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                          margin: const EdgeInsets.only(top: 14, bottom: 14),
+                          child: Image.asset('assets/pictures/logo.png')),
+                      SizedBox(height: 30),
+                      buildFIO(),
+                      SizedBox(height: 20),
+                      buildEmail(),
+                      SizedBox(height: 20),
+                      buildNickname(),
+                      SizedBox(height: 20),
+                      buildBirthDate(context),
+                      SizedBox(height: 20),
+                      buildPhone(),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/login');
+                          },
+                          child: Text(
+                            'Уже есть аккаунт? Войти',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 14,
+                              color: Color.fromRGBO(87, 72, 254, 100),
+                            ),
+                          ),
+                        ),
+                      ),
+                      buildContinueBtn(),
+                    ],
+                  ),
+                ),
+              ))
+            ],
+          )),
+        ));
+  }
+}
+
+class SignupScreenUserPassword extends StatefulWidget {
+  const SignupScreenUserPassword({Key? key}) : super(key: key);
+
+  @override
+  _SignupScreenUserPasswordState createState() =>
+      _SignupScreenUserPasswordState();
+}
+
+class _SignupScreenUserPasswordState extends State<SignupScreenUserPassword> {
+
+  Widget buildPassword() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(45),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+              ]),
+          height: 50,
+          child: TextField(
+            obscureText: true,
+            style: TextStyle(color: Colors.black87),
+            decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(left: 20),
+                border: InputBorder.none,
+                hintText: 'Пароль',
+                hintStyle:
+                TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget buildConfirmPassword() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(45),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
+              ]),
+          height: 50,
+          child: TextField(
+            obscureText: true,
+            style: TextStyle(color: Colors.black87),
+            decoration: InputDecoration(
+                contentPadding: const EdgeInsets.only(left: 20),
+                border: InputBorder.none,
+                hintText: 'Подтвердите пароль',
+                hintStyle:
+                TextStyle(color: Color.fromRGBO(113, 109, 108, 100))),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget buildSignupBtn() {
+    return Container(
+        margin: EdgeInsets.only(top: 15, left: 50, right: 50),
+        width: double.infinity,
+        height: 50,
+        child: TextButton(
+          onPressed: () => print('Signup Pressed'),
+          child: Text(
+            'ОК',
+            style: TextStyle(
+              color: Color.fromRGBO(72, 139, 254, 100),
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          style: ButtonStyle(
+              backgroundColor:
+              MaterialStateProperty.all<Color>(Colors.transparent),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      side: BorderSide(
+                          color: Color.fromRGBO(72, 139, 254, 100),
+                          width: 3)))),
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+          title: Text('РЕГИСТРАЦИЯ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontFamily: 'Yeseva',
+              )),
+          centerTitle: true,
+          backgroundColor: Color.fromRGBO(230, 230, 230, 100),
+        ),
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: GestureDetector(
@@ -242,7 +429,8 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
                 children: <Widget>[
                   Center(
                       child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 25),
+                        margin:
+                        const EdgeInsets.symmetric(vertical: 50, horizontal: 25),
                         height: double.infinity,
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -258,26 +446,15 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
                               Container(
                                   margin: const EdgeInsets.only(top: 14, bottom: 14),
                                   child: Image.asset('assets/pictures/logo.png')),
-                              Text('РЕГИСТРАЦИЯ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontFamily: 'Yeseva',
-                                  )),
-                              SizedBox(height: 30),
-                              buildFIO(),
+                              SizedBox(height: 80),
+                              buildPassword(),
                               SizedBox(height: 20),
-                              buildEmail(),
-                              SizedBox(height: 20),
-                              buildNickname(),
-                              SizedBox(height: 20),
-                              buildBirthDate(context),
-                              SizedBox(height: 20),
-                              buildPhone(),
+                              buildConfirmPassword(),
                               Container(
-                                margin: const EdgeInsets.only(bottom: 25),
+                                margin: const EdgeInsets.only(bottom: 10),
                                 child: TextButton(
                                   onPressed: () {
+                                    Navigator.pop(context);
                                     Navigator.pushReplacementNamed(context, '/login');
                                   },
                                   child: Text(
@@ -290,32 +467,13 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
                                   ),
                                 ),
                               ),
-                              buildContinueBtn(),
+                              buildSignupBtn(),
                             ],
                           ),
                         ),
-                      )
-                  )
+                      ))
                 ],
               )),
         ));
   }
 }
-
-class SignupScreenUserPassword extends StatefulWidget {
-  const SignupScreenUserPassword({Key? key}) : super(key: key);
-
-  @override
-  _SignupScreenUserPasswordState createState() => _SignupScreenUserPasswordState();
-}
-
-class _SignupScreenUserPasswordState extends State<SignupScreenUserPassword> {
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
