@@ -218,7 +218,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               Container(
                                 margin: const EdgeInsets.only(top: 60),
                                 child: TextButton(
-                                  onPressed: () => print("Sign up pressed"),
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(context, '/signup');
+                                  },
                                   child: Text(
                                     'Регистрация',
                                     style: TextStyle(

@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+class SignupScreenUserData extends StatefulWidget {
+  const SignupScreenUserData({Key? key}) : super(key: key);
 
   @override
-  _SignupScreenState createState() => _SignupScreenState();
+  _SignupScreenUserDataState createState() => _SignupScreenUserDataState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupScreenUserDataState extends State<SignupScreenUserData> {
 
   DateTime selectedDate = DateTime.now();
   TextEditingController _date = new TextEditingController();
@@ -203,6 +203,34 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
+  Widget buildContinueBtn() {
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 50),
+        width: double.infinity,
+        height: 50,
+        child: TextButton(
+          onPressed: () => print('Login Pressed'),
+          child: Text(
+            'Продолжить',
+            style: TextStyle(
+              color: Color.fromRGBO(72, 139, 254, 100),
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      side: BorderSide(
+                          color: Color.fromRGBO(72, 139, 254, 100),
+                          width: 3)
+                  )
+              )
+          ),
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -246,20 +274,23 @@ class _SignupScreenState extends State<SignupScreen> {
                               buildBirthDate(context),
                               SizedBox(height: 20),
                               buildPhone(),
-                              // Container(
-                              //   margin: const EdgeInsets.only(top: 60),
-                              //   child: TextButton(
-                              //     onPressed: () => print("Sign up pressed"),
-                              //     child: Text(
-                              //       'Регистрация',
-                              //       style: TextStyle(
-                              //         decoration: TextDecoration.underline,
-                              //         fontSize: 18,
-                              //         color: Color.fromRGBO(87, 72, 254, 100),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 25),
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(context, '/login');
+                                  },
+                                  child: Text(
+                                    'Уже есть аккаунт? Войти',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 14,
+                                      color: Color.fromRGBO(87, 72, 254, 100),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              buildContinueBtn(),
                             ],
                           ),
                         ),
@@ -270,3 +301,21 @@ class _SignupScreenState extends State<SignupScreen> {
         ));
   }
 }
+
+class SignupScreenUserPassword extends StatefulWidget {
+  const SignupScreenUserPassword({Key? key}) : super(key: key);
+
+  @override
+  _SignupScreenUserPasswordState createState() => _SignupScreenUserPasswordState();
+}
+
+class _SignupScreenUserPasswordState extends State<SignupScreenUserPassword> {
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
