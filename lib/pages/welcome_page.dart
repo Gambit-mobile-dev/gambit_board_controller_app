@@ -30,12 +30,13 @@ class _WelcomePageState extends State<WelcomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(height: 100),
             SizedBox(
-                height: 500,
-                width: 500,
+                height: 400,
+                width: 400,
                 child: Lottie.asset('assets/welcome/3d-chess.json')),
-            SizedBox(height: 10),
-            Image.asset('assets/pictures/logo.png'),
+            // SizedBox(height: 10),
+            Image.asset('assets/pictures/logo_original.png', width: 250, height: 250),
           ],
         ),
       ),
