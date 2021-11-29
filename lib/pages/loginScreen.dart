@@ -120,7 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
         width: double.infinity,
         height: 50,
         child: TextButton(
-          onPressed: () => print('Login Pressed'),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/home');
+          },
           child: Text(
             'Войти',
             style: TextStyle(

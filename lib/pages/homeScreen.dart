@@ -1,154 +1,90 @@
-// // Copyright 2019 The Flutter team. All rights reserved.
-// // Use of this source code is governed by a BSD-style license that can be
-// // found in the LICENSE file.
-//
-// import 'package:animations/animations.dart';
-// import 'package:flutter/material.dart';
-//
-// class BottomNavigationDemo extends StatefulWidget {
-//   const BottomNavigationDemo({
-//     required Key key,
-//     required this.restorationId,
-//     required this.type,
-//   }) : super(key: key);
-//
-//   final String restorationId;
-//
-//   @override
-//   _BottomNavigationDemoState createState() => _BottomNavigationDemoState();
-// }
-//
-// class _BottomNavigationDemoState extends State<BottomNavigationDemo>
-//     with RestorationMixin {
-//   final RestorableInt _currentIndex = RestorableInt(0);
-//
-//   @override
-//   String get restorationId => widget.restorationId;
-//
-//   @override
-//   void restoreState(RestorationBucket oldBucket, bool initialRestore) {
-//     registerForRestoration(_currentIndex, 'bottom_navigation_tab_index');
-//   }
-//
-//   @override
-//   void dispose() {
-//     _currentIndex.dispose();
-//     super.dispose();
-//   }
-//
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final colorScheme = Theme.of(context).colorScheme;
-//     final textTheme = Theme.of(context).textTheme;
-//
-//     var bottomNavigationBarItems = <BottomNavigationBarItem>[
-//       BottomNavigationBarItem(
-//         icon: const Icon(Icons.add_comment),
-//       ),
-//       BottomNavigationBarItem(
-//         icon: const Icon(Icons.calendar_today),
-//       ),
-//       BottomNavigationBarItem(
-//         icon: const Icon(Icons.account_circle),
-//       ),
-//       BottomNavigationBarItem(
-//         icon: const Icon(Icons.alarm_on),
-//       ),
-//       BottomNavigationBarItem(
-//         icon: const Icon(Icons.camera_enhance),
-//       ),
-//     ];
-//
-//     if (widget.type == BottomNavigationDemoType.withLabels) {
-//       bottomNavigationBarItems = bottomNavigationBarItems.sublist(
-//           0, bottomNavigationBarItems.length - 2);
-//       _currentIndex.value = _currentIndex.value
-//           .clamp(0, bottomNavigationBarItems.length - 1)
-//           .toInt();
-//     }
-//
-//     return Scaffold(
-//       appBar: AppBar(
-//         automaticallyImplyLeading: false,
-//       ),
-//       body: Center(
-//         child: PageTransitionSwitcher(
-//           transitionBuilder: (child, animation, secondaryAnimation) {
-//             return FadeThroughTransition(
-//               animation: animation,
-//               secondaryAnimation: secondaryAnimation,
-//               child: child,
-//             );
-//           },
-//           child: _NavigationDestinationView(
-//             // Adding [UniqueKey] to make sure the widget rebuilds when transitioning.
-//             key: UniqueKey(),
-//             item: bottomNavigationBarItems[_currentIndex.value],
-//           ),
-//         ),
-//       ),
-//       bottomNavigationBar: BottomNavigationBar(
-//         showUnselectedLabels:
-//             widget.type == BottomNavigationDemoType.withLabels,
-//         items: bottomNavigationBarItems,
-//         currentIndex: _currentIndex.value,
-//         type: BottomNavigationBarType.fixed,
-//         selectedFontSize: textTheme.caption.fontSize,
-//         unselectedFontSize: textTheme.caption.fontSize,
-//         onTap: (index) {
-//           setState(() {
-//             _currentIndex.value = index;
-//           });
-//         },
-//         selectedItemColor: colorScheme.onPrimary,
-//         unselectedItemColor: colorScheme.onPrimary.withOpacity(0.38),
-//         backgroundColor: colorScheme.primary,
-//       ),
-//     );
-//   }
-// }
-//
-// class _NavigationDestinationView extends StatelessWidget {
-//   const _NavigationDestinationView({Key key, this.item}) : super(key: key);
-//
-//   final BottomNavigationBarItem item;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Stack(
-//       children: [
-//         ExcludeSemantics(
-//           child: Center(
-//             child: Padding(
-//               padding: const EdgeInsets.all(16),
-//               child: ClipRRect(
-//                 borderRadius: BorderRadius.circular(8),
-//                 child: Image.asset(
-//                   'assets/demos/bottom_navigation_background.png',
-//                   package: 'flutter_gallery_assets',
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//         Center(
-//           child: IconTheme(
-//             data: const IconThemeData(
-//               color: Colors.white,
-//               size: 80,
-//             ),
-//             child: Semantics(
-//               label: GalleryLocalizations.of(context)
-//                   .bottomNavigationContentPlaceholder(
-//                 item.label,
-//               ),
-//               child: item.icon,
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-//
+/// Flutter code sample for BottomNavigationBar
+
+// This example shows a [BottomNavigationBar] as it is used within a [Scaffold]
+// widget. The [BottomNavigationBar] has three [BottomNavigationBarItem]
+// widgets, which means it defaults to [BottomNavigationBarType.fixed], and
+// the [currentIndex] is set to index 0. The selected item is
+// amber. The `_onItemTapped` function changes the selected item's index
+// and displays a corresponding message in the center of the [Scaffold].
+import 'acc_profilePage.dart';
+import 'package:flutter/material.dart';
+
+/// This is the stateful widget that the main application instantiates.
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+/// This is the private State class that goes with MyStatefulWidget.
+class _MainScreenState extends State<MainScreen> {
+  int _selectedIndex = 0;
+  String appbarTitle = 'GAME';
+  static const List<Widget> _widgetOptions = <Widget>[
+    AccProfilePage(),
+    AccProfilePage(),
+    AccProfilePage()
+    // Text(
+    //   'Index 1: Devices',
+    //   style: optionStyle,
+    // ),
+    // Text(
+    //   'Index 2: Account Profile',
+    //   style: optionStyle,
+    // ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if (index == 0) appbarTitle = 'GAME';
+      else if (index == 1) appbarTitle = 'DEVICES';
+      else if (index == 2) appbarTitle = 'ACCOUNT PROFILE';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        title: Text(appbarTitle,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 25,
+              fontFamily: 'Yeseva',
+            )),
+        centerTitle: true,
+        backgroundColor: Color.fromRGBO(230, 230, 230, 100),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.settings))
+        ],
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.groups),
+            label: 'Game',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.devices),
+            label: 'Devices',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color.fromRGBO(72, 139, 254, 100),
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}

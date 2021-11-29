@@ -83,6 +83,9 @@ flutter:
       fonts:
         - asset: assets/fonts/josefin_sans/JosefinSans-VariableFont_wght.ttf
         - asset: assets/fonts/josefin_sans/JosefinSans-Italic-VariableFont_wght.ttf
+    - family: Comfortaa
+      fonts:
+        - asset: assets/fonts/comfortaa/Comfortaa-VariableFont_wght.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

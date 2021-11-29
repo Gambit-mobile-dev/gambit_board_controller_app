@@ -264,47 +264,48 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Color.fromRGBO(230, 230, 230, 100),
-                ),
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                          margin: const EdgeInsets.only(top: 14, bottom: 14),
-                          child: Image.asset('assets/pictures/logo.png')),
-                      SizedBox(height: 30),
-                      buildFIO(),
-                      SizedBox(height: 20),
-                      buildEmail(),
-                      SizedBox(height: 20),
-                      buildNickname(),
-                      SizedBox(height: 20),
-                      buildBirthDate(context),
-                      SizedBox(height: 20),
-                      buildPhone(),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/login');
-                          },
-                          child: Text(
-                            'Уже есть аккаунт? Войти',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontSize: 14,
-                              color: Color.fromRGBO(87, 72, 254, 100),
+                  ),
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              margin: const EdgeInsets.only(top: 14, bottom: 14),
+                              child: Image.asset('assets/pictures/logo.png')),
+                          SizedBox(height: 30),
+                          buildFIO(),
+                          SizedBox(height: 20),
+                          buildEmail(),
+                          SizedBox(height: 20),
+                          buildNickname(),
+                          SizedBox(height: 20),
+                          buildBirthDate(context),
+                          SizedBox(height: 20),
+                          buildPhone(),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(context, '/login');
+                              },
+                              child: Text(
+                                'Уже есть аккаунт? Войти',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 14,
+                                  color: Color.fromRGBO(87, 72, 254, 100),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          buildContinueBtn(),
+                        ],
                       ),
-                      buildContinueBtn(),
-                    ],
-                  ),
-                ),
-              ))
+                    ),
+                  )
+              )
             ],
           )),
         ));
@@ -385,7 +386,9 @@ class _SignupScreenUserPasswordState extends State<SignupScreenUserPassword> {
         width: double.infinity,
         height: 50,
         child: TextButton(
-          onPressed: () => print('Signup Pressed'),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/home');
+          },
           child: Text(
             'ОК',
             style: TextStyle(
