@@ -6,8 +6,12 @@
 // the [currentIndex] is set to index 0. The selected item is
 // amber. The `_onItemTapped` function changes the selected item's index
 // and displays a corresponding message in the center of the [Scaffold].
+import 'package:gambit_board_controller_app/pages/gamePage.dart';
+
 import 'acc_profilePage.dart';
+import 'devicesPage.dart';
 import 'package:flutter/material.dart';
+import 'test.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class MainScreen extends StatefulWidget {
@@ -22,8 +26,8 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   String appbarTitle = 'GAME';
   static const List<Widget> _widgetOptions = <Widget>[
-    AccProfilePage(),
-    AccProfilePage(),
+    GamePage(),
+    DevicesPage(),
     AccProfilePage()
     // Text(
     //   'Index 1: Devices',

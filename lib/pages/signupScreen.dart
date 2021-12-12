@@ -27,31 +27,6 @@ class _SignupScreenUserDataState extends State<SignupScreenUserData> {
       });
   }
 
-  // late DateTime birth_date;
-  //
-  // String getDate() {
-  //   if (birth_date == null) {
-  //     return 'Дата рождения';
-  //   }
-  //   else {
-  //     return '${birth_date.day}.${birth_date.month}.${birth_date.year}';
-  //   }
-  // }
-  //
-  // Future pickDate(BuildContext context) async{
-  //   final initialDate = DateTime.now();
-  //   final newDate = await showDatePicker(
-  //       context: context,
-  //       initialDate: initialDate,
-  //       firstDate: DateTime(DateTime.now().year - 100),
-  //       lastDate: DateTime(DateTime.now().year + 100),
-  //   );
-  //
-  //   if (newDate == null) return;
-  //
-  //   setState(() => birth_date = newDate);
-  // }
-
   Widget buildFIO() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
