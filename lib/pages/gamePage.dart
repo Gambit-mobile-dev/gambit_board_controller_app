@@ -14,13 +14,6 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
 ChessBoardController controller = ChessBoardController();
 
-  List<Device> devices = <Device>[
-    Device(1, 'Модель №1', 'Подключить'),
-    Device(2, 'Модель №2', 'Подключить'),
-    Device(3, 'Модель №3', 'Подключить'),
-    Device(4, 'Модель №4', 'Подключить')
-  ];
-
 
 
   @override
@@ -30,6 +23,7 @@ ChessBoardController controller = ChessBoardController();
           value: SystemUiOverlayStyle.light,
           child: GestureDetector(
               child: Container(
+                alignment: Alignment.center,
                 child: ChessBoard(
                   controller: controller,
                 boardOrientation: PlayerColor.white,
@@ -39,11 +33,4 @@ ChessBoardController controller = ChessBoardController();
               ),
         );
   }
-}
-
-class Device {
-  final int id;
-  final String nameModel;
-  String isConnected;
-  Device(this.id, this.nameModel, this.isConnected);
 }

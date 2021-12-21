@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -11,6 +12,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
+
+  void _launchLichessURL() async {
+    const String url = 'https://lichess.org';
+    if (!await launch(url))
+      throw 'Could not launch $url';
+  }
 
   Widget buildEmail() {
     return Column(
@@ -143,37 +150,23 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 
-  Widget buildGoogleAuth() {
+  Widget buildLichessAuth() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          onPressed: () => print("Forgot Password pressed"),
+          onPressed: () => _launchLichessURL(),
           child: Text(
-            'Войти через Google',
+            'Войти через Lichess',
             style:
                 TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),
           ),
         ),
-        Image.asset('assets/pictures/googleIcon.png'),
+        Image.asset('assets/pictures/lichess.png', width: 20.0, height: 20.0,),
       ],
     );
   }
 
-  // Widget buildSignUpBtn() {
-  //   return GestureDetector(
-  //       onTap: () => print("Sing Up Pressed"),
-  //       child: TextButton(
-  //         onPressed: () => print("Forgot Password pressed"),
-  //         child: Text(
-  //           'Регистрация',
-  //           style: TextStyle(
-  //               color: Colors.black54,
-  //               fontStyle: FontStyle.italic),
-  //         ),
-  //       ),
-  //       );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -219,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       buildForgotPassBtn(),
                       // buildRememberCb(),
                       buildLoginBtn(),
-                      buildGoogleAuth(),
+                      buildLichessAuth(),
                       Container(
                         margin: const EdgeInsets.only(top: 60),
                         child: TextButton(

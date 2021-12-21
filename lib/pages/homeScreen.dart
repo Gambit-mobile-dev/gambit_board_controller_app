@@ -29,14 +29,6 @@ class _MainScreenState extends State<MainScreen> {
     GamePage(),
     DevicesPage(),
     AccProfilePage()
-    // Text(
-    //   'Index 1: Devices',
-    //   style: optionStyle,
-    // ),
-    // Text(
-    //   'Index 2: Account Profile',
-    //   style: optionStyle,
-    // ),
   ];
 
   void _onItemTapped(int index) {
