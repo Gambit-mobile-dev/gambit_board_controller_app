@@ -11,7 +11,6 @@ import 'package:gambit_board_controller_app/pages/gamePage.dart';
 import 'acc_profilePage.dart';
 import 'devicesPage.dart';
 import 'package:flutter/material.dart';
-import 'test.dart';
 
 /// This is the stateful widget that the main application instantiates.
 class MainScreen extends StatefulWidget {
