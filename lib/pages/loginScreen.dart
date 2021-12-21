@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:gambit_board_controller_app/api/LichessAPI.dart';
+import 'package:gambit_board_controller_app/api/LichessExeption.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,10 +18,28 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
 
   void _launchLichessURL() async {
-    const String url = 'https://lichess.org';
-    if (!await launch(url))
-      throw 'Could not launch $url';
+    Lichess lichess = new Lichess();
+
+    try {
+      final String url = await lichess.getAuthUrl();
+          // ()=>closeWebView()
+      var futtoken=lichess.getToken();
+
+       if (!await launch(url,forceWebView: true))
+      //if (!await launch(url))
+        throw 'Could not launch $url';
+
+      var token = await futtoken;
+
+      print(token);
+await closeWebView();
+      lichess.deleteToken();
+    } on LichessException catch(ex) {
+      print(ex.message);
+    }
   }
+
+
 
   Widget buildEmail() {
     return Column(
@@ -154,15 +176,21 @@ class _LoginScreenState extends State<LoginScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextButton(
-          onPressed: () => _launchLichessURL(),
-          child: Text(
-            'Войти через Lichess',
-            style:
-                TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),
-          ),
+        ElevatedButton(
+          onPressed: () => setState(() {
+
+
+            _launchLichessURL();
+            // Timer(const Duration(seconds: 5), () {
+            //
+            //   print('Closing WebView after 5 seconds...');
+            //   closeWebView();
+            // });
+          }),
+          child: const Text('Launch in app + close after 5 seconds'),
         ),
-        Image.asset('assets/pictures/lichess.png', width: 20.0, height: 20.0,),
+
+
       ],
     );
   }

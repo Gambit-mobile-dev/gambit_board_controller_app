@@ -89,6 +89,8 @@ class Lichess {
       throw error;
     }
 
+   // func.call();
+
     return _accessToken;
   }
 
