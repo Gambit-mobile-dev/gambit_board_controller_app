@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _launchLichessURL() async {
     const String url = 'https://lichess.org';
-    if (!await launch(url))
+    if (!await launch(url, forceWebView: true))
       throw 'Could not launch $url';
   }
 
@@ -155,7 +157,10 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
-          onPressed: () => _launchLichessURL(),
+          onPressed: () => setState(() {
+            _launchLichessURL();
+            Timer(const Duration(seconds: 5), () {closeWebView();});
+          }),
           child: Text(
             'Войти через Lichess',
             style:

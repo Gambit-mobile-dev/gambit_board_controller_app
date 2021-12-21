@@ -41,8 +41,7 @@ class _DevicesPageState extends State<DevicesPage> {
                               height: 150,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30),
-                                color: Color.fromRGBO(230, 230, 230, 100),
-                              ),
+                                color: Color.fromRGBO(230, 230, 230, 100),),
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,11 +105,17 @@ class _DevicesPageState extends State<DevicesPage> {
                                 ],
                               ),
                             );
-                    })
-                  ),
+                    }),
+                  )
                 )
       )),
-    ));
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: (){setState(() {
+        devices.add(Device(5, 'fd', 'Подключить'));
+      });},
+      child: Icon(Icons.add_box),
+    ),);
   }
 }
 

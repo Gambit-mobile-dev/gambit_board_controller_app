@@ -25,14 +25,15 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   String appbarTitle = 'GAME';
+
   static const List<Widget> _widgetOptions = <Widget>[
     GamePage(),
     DevicesPage(),
     AccProfilePage()
   ];
-
   void _onItemTapped(int index) {
-    setState(() {
+    setState(()
+    {
       _selectedIndex = index;
       if (index == 0) appbarTitle = 'GAME';
       else if (index == 1) appbarTitle = 'DEVICES';
@@ -59,8 +60,27 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(onPressed: (){}, icon: Icon(Icons.settings))
         ],
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: new Stack(
+        children: [
+          new Offstage(
+            offstage: _selectedIndex != 0,
+            child: new TickerMode(
+                enabled: _selectedIndex == 0,
+                child: new GamePage()),
+          ),
+          new Offstage(
+            offstage: _selectedIndex != 1,
+            child: new TickerMode(
+                enabled: _selectedIndex == 1,
+                child: new DevicesPage()),
+          ),
+          new Offstage(
+            offstage: _selectedIndex != 2,
+            child: new TickerMode(
+                enabled: _selectedIndex == 2,
+                child: new AccProfilePage()),
+          ),
+        ]
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -84,3 +104,31 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+
+
+
+//       body: Center(
+//         child: _widgetOptions.elementAt(_selectedIndex),
+//       ),
+//       bottomNavigationBar: BottomNavigationBar(
+//         items: const <BottomNavigationBarItem>[
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.groups),
+//             label: 'Game',
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.devices),
+//             label: 'Devices',
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(Icons.account_circle),
+//             label: 'Account',
+//           ),
+//         ],
+//         currentIndex: _selectedIndex,
+//         selectedItemColor: Color.fromRGBO(72, 139, 254, 100),
+//         onTap: _onItemTapped,
+//       ),
+//     );
+//   }
+// }
