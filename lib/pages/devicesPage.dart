@@ -111,9 +111,44 @@ class _DevicesPageState extends State<DevicesPage> {
       )),
     ),
     floatingActionButton: FloatingActionButton(
-      onPressed: (){setState(() {
-        devices.add(Device(5, 'fd', 'Подключить'));
-      });},
+      onPressed: () {
+        showDialog(context: context, builder: (BuildContext context) {
+          return SimpleDialog(
+            title: Text('Добавить устройство'),
+            children: [
+              SimpleDialogOption(
+                child: TextButton(
+                  child: Text('Модель №5'),
+                  onPressed: () {
+                    setState(() {
+                      devices.add(Device(5, 'Модель №5', 'Подключить'));
+                    });
+                  },
+                ),
+              ),
+              SimpleDialogOption(
+                child: TextButton(
+                  child: Text('Модель №6'),
+                  onPressed: () {
+                    setState(() {
+                      devices.add(Device(6, 'Модель №6', 'Подключить'));
+                    });
+                  },
+                ),
+              )
+            ]
+              // color: Colors.white,
+              // margin: EdgeInsets.symmetric(vertical: 100, horizontal: 10),
+              // width: double.infinity,
+              // height: double.infinity,
+              // child: Text('bf'),
+          );
+        });
+
+      },
+      // onPressed: (){setState(() {
+      //   devices.add(Device(5, 'fd', 'Подключить'));
+      // });},
       child: Icon(Icons.add_box),
     ),);
   }

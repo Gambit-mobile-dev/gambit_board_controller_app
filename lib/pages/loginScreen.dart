@@ -15,8 +15,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
 
-  void _launchLichessURL() async {
-    const String url = 'https://lichess.org';
+  String signupURL = 'https://lichess.org/signup';
+  String loginURL = 'https://lichess.org';
+
+  void _launchLichessURL(String url) async {
     if (!await launch(url, forceWebView: true))
       throw 'Could not launch $url';
   }
@@ -158,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         TextButton(
           onPressed: () => setState(() {
-            _launchLichessURL();
+            _launchLichessURL(loginURL);
             Timer(const Duration(seconds: 5), () {closeWebView();});
           }),
           child: Text(
@@ -167,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),
           ),
         ),
-        Image.asset('assets/pictures/lichess.png', width: 20.0, height: 20.0,),
+        Image.asset('assets/pictures/lichessIcon.png', width: 25.0, height: 25.0,),
       ],
     );
   }
@@ -222,7 +224,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         margin: const EdgeInsets.only(top: 60),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/signup');
+                            _launchLichessURL(signupURL);
+                            Timer(const Duration(seconds: 10), () {closeWebView();});
                           },
                           child: Text(
                             'Регистрация',

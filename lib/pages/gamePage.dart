@@ -19,9 +19,12 @@ class _GamePageState extends State<GamePage> {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-          child: ChessBoard(
-            controller: controller,
-            boardOrientation: PlayerColor.white,
+          child: Container(
+            alignment: Alignment.center,
+            child: ChessBoard(
+              controller: controller,
+              boardOrientation: PlayerColor.white,
+            ),
           ),
         ),
       );
