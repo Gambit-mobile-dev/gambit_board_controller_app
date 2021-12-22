@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () => print("Forgot Password pressed"),
+        onPressed: () {},
         child: Text(
           'Забыли пароль?',
           style: TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),

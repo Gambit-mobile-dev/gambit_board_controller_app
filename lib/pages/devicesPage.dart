@@ -12,6 +12,8 @@ class DevicesPage extends StatefulWidget {
 
 class _DevicesPageState extends State<DevicesPage> {
 
+  late int deviceid;
+
   List<Device> devices = <Device>[
     Device(1, 'Модель №1', 'Подключить'),
     Device(2, 'Модель №2', 'Подключить'),
@@ -19,7 +21,47 @@ class _DevicesPageState extends State<DevicesPage> {
     Device(4, 'Модель №4', 'Подключить')
   ];
 
-
+  Widget buildDeviceDialog(int selectedDeviceid, BuildContext context) {
+    return SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      title: Text('Настройки модели'),
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 30),
+          child: ElevatedButton(
+              onPressed: (){
+                setState(() {
+                  selectedDeviceid;
+                  devices.removeAt(selectedDeviceid);
+                  Navigator.pop(context, true);
+                });
+              },
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  )
+                ),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              ),
+              child: Text('Удалить')),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 30),
+          child: ElevatedButton(
+              onPressed: (){},
+              style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    )
+                ),
+              ),
+              child: Text('Настроить')),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +139,11 @@ class _DevicesPageState extends State<DevicesPage> {
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 8),
                                       child: IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          showDialog(context: context, builder: (BuildContext context) {
+                                            return buildDeviceDialog(index, context);
+                                          });
+                                        },
                                         icon: Icon(Icons.settings),
                                       ),
                                     ),
@@ -112,36 +158,25 @@ class _DevicesPageState extends State<DevicesPage> {
     ),
     floatingActionButton: FloatingActionButton(
       onPressed: () {
+        deviceid = devices.last.id;
+        deviceid++;
         showDialog(context: context, builder: (BuildContext context) {
           return SimpleDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
             title: Text('Добавить устройство'),
             children: [
               SimpleDialogOption(
                 child: TextButton(
-                  child: Text('Модель №5'),
+                  child: Text('Модель №${deviceid}'),
                   onPressed: () {
                     setState(() {
-                      devices.add(Device(5, 'Модель №5', 'Подключить'));
+                      devices.add(Device(deviceid, 'Модель №$deviceid', 'Подключить'));
+                      Navigator.pop(context, true);
                     });
                   },
                 ),
               ),
-              SimpleDialogOption(
-                child: TextButton(
-                  child: Text('Модель №6'),
-                  onPressed: () {
-                    setState(() {
-                      devices.add(Device(6, 'Модель №6', 'Подключить'));
-                    });
-                  },
-                ),
-              )
             ]
-              // color: Colors.white,
-              // margin: EdgeInsets.symmetric(vertical: 100, horizontal: 10),
-              // width: double.infinity,
-              // height: double.infinity,
-              // child: Text('bf'),
           );
         });
 
@@ -155,8 +190,8 @@ class _DevicesPageState extends State<DevicesPage> {
 }
 
 class Device {
-  final int id;
-  final String nameModel;
+  int id;
+  String nameModel;
   String isConnected;
   Device(this.id, this.nameModel, this.isConnected);
 }

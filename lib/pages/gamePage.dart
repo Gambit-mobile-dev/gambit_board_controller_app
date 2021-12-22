@@ -21,9 +21,21 @@ class _GamePageState extends State<GamePage> {
         value: SystemUiOverlayStyle.light,
           child: Container(
             alignment: Alignment.center,
-            child: ChessBoard(
-              controller: controller,
-              boardOrientation: PlayerColor.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ChessBoard(
+                  controller: controller,
+                  boardOrientation: PlayerColor.white,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        controller.loadPGN('demo PGN');
+                      });
+                    },
+                    child: Text('Начать заново'))
+              ],
             ),
           ),
         ),
