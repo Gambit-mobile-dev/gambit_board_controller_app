@@ -12,25 +12,21 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-ChessBoardController controller = ChessBoardController();
-
-
+  ChessBoardController controller = ChessBoardController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-              child: Container(
-                alignment: Alignment.center,
-                child: ChessBoard(
-                  controller: controller,
-                boardOrientation: PlayerColor.white,
-              ),
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+          child: Container(
+            alignment: Alignment.center,
+            child: ChessBoard(
+              controller: controller,
+              boardOrientation: PlayerColor.white,
+            ),
           ),
-                ),
-              ),
-        );
+        ),
+      );
   }
 }
