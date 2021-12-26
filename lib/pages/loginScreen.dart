@@ -18,28 +18,26 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
 
   void _launchLichessURL() async {
-    Lichess lichess = new Lichess();
+    LichessAPI lichess = new LichessAPI();
 
     try {
       final String url = await lichess.getAuthUrl();
-          // ()=>closeWebView()
-      var futtoken=lichess.getToken();
+      // ()=>closeWebView()
+      var futtoken = lichess.getToken();
 
-       if (!await launch(url,forceWebView: true))
-      //if (!await launch(url))
+      if (!await launch(url, forceWebView: true, enableJavaScript: true))
+        //if (!await launch(url))
         throw 'Could not launch $url';
 
       var token = await futtoken;
 
-      print(token);
-await closeWebView();
+      print('Токен - ' + token.toString());
+      await closeWebView();
       lichess.deleteToken();
-    } on LichessException catch(ex) {
+    } on LichessException catch (ex) {
       print(ex.message);
     }
   }
-
-
 
   Widget buildEmail() {
     return Column(
@@ -176,25 +174,20 @@ await closeWebView();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
+        TextButton(
           onPressed: () => setState(() {
-
-
             _launchLichessURL();
-            // Timer(const Duration(seconds: 5), () {
-            //
-            //   print('Closing WebView after 5 seconds...');
-            //   closeWebView();
-            // });
           }),
-          child: const Text('Launch in app + close after 5 seconds'),
+          child: Text(
+            'Войти через Lichess',
+            style:
+            TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),
+          ),
         ),
-
-
+        Image.asset('assets/pictures/lichessIcon.png', width: 25.0, height: 25.0,),
       ],
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +238,7 @@ await closeWebView();
                         margin: const EdgeInsets.only(top: 60),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/signup');
+                            launch('https://lichess.org/signup');
                           },
                           child: Text(
                             'Регистрация',
