@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:gambit_board_controller_app/api/LichessAPI.dart';
+import 'package:gambit_board_controller_app/api/LichessExeption.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,12 +17,26 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isRememberMe = false;
 
-  String signupURL = 'https://lichess.org/signup';
-  String loginURL = 'https://lichess.org';
+  void _launchLichessURL() async {
+    LichessAPI lichess = new LichessAPI();
 
-  void _launchLichessURL(String url) async {
-    if (!await launch(url, forceWebView: true))
-      throw 'Could not launch $url';
+    try {
+      final String url = await lichess.getAuthUrl();
+      // ()=>closeWebView()
+      var futtoken = lichess.getToken();
+
+      if (!await launch(url, forceWebView: true, enableJavaScript: true))
+        //if (!await launch(url))
+        throw 'Could not launch $url';
+
+      var token = await futtoken;
+
+      print('Токен - ' + token.toString());
+      await closeWebView();
+      lichess.deleteToken();
+    } on LichessException catch (ex) {
+      print(ex.message);
+    }
   }
 
   Widget buildEmail() {
@@ -160,20 +176,18 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         TextButton(
           onPressed: () => setState(() {
-            _launchLichessURL(loginURL);
-            Timer(const Duration(seconds: 5), () {closeWebView();});
+            _launchLichessURL();
           }),
           child: Text(
             'Войти через Lichess',
             style:
-                TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),
+            TextStyle(color: Colors.black54, fontStyle: FontStyle.italic),
           ),
         ),
         Image.asset('assets/pictures/lichessIcon.png', width: 25.0, height: 25.0,),
       ],
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -224,8 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         margin: const EdgeInsets.only(top: 60),
                         child: TextButton(
                           onPressed: () {
-                            _launchLichessURL(signupURL);
-                            Timer(const Duration(seconds: 10), () {closeWebView();});
+                            launch('https://lichess.org/signup');
                           },
                           child: Text(
                             'Регистрация',
