@@ -1,11 +1,15 @@
 import 'dart:async';
 
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gambit_board_controller_app/classes/User.dart';
+import 'package:gambit_board_controller_app/pages/homeScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gambit_board_controller_app/api/LichessAPI.dart';
 import 'package:gambit_board_controller_app/api/LichessExeption.dart';
+import 'package:gambit_board_controller_app/classes/ScreenArguments.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,8 +19,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  User user = new User();
   bool isRememberMe = false;
-
+  String token = '';
   void _launchLichessURL() async {
     LichessAPI lichess = new LichessAPI();
 
@@ -29,11 +34,20 @@ class _LoginScreenState extends State<LoginScreen> {
         //if (!await launch(url))
         throw 'Could not launch $url';
 
-      var token = await futtoken;
+      token = await futtoken;
 
-      print('Токен - ' + token.toString());
       await closeWebView();
-      lichess.deleteToken();
+
+      var userData = await lichess.getProfile();
+      var userEmail = await lichess.getEmailAddress();
+      user.username = userData['username'];
+      user.firstname = userData['profile']['firstName'];
+      user.lastname = userData['profile']['lastName'];
+      user.wins = userData['count']['win'];
+      user.loses = userData['count']['loss'];
+      user.email = userEmail['email'];
+
+      // lichess.deleteToken();
     } on LichessException catch (ex) {
       print(ex.message);
     }
@@ -148,7 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
         height: 50,
         child: TextButton(
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/home');
+            ScreenArguments screenArguments = ScreenArguments(user, token);
+            Navigator.pushReplacementNamed(context, '/home', arguments: screenArguments);
           },
           child: Text(
             'Войти',

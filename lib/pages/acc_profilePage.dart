@@ -2,33 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:gambit_board_controller_app/classes/User.dart';
+import 'package:gambit_board_controller_app/classes/ScreenArguments.dart';
+import 'package:gambit_board_controller_app/pages/homeScreen.dart';
 
 class AccProfilePage extends StatefulWidget {
   const AccProfilePage({Key? key}) : super(key: key);
+
 
   @override
   _AccProfilePageState createState() => _AccProfilePageState();
 }
 
+
 class _AccProfilePageState extends State<AccProfilePage> {
+
   DateTime selectedDate = DateTime.now();
   TextEditingController _date = new TextEditingController();
 
-  Future _selectDate(BuildContext context) async {
-    final birth_date = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(DateTime.now().year - 150),
-        lastDate: DateTime(DateTime.now().year + 1));
-    if (birth_date != null && birth_date != selectedDate)
-      setState(() {
-        selectedDate = birth_date;
-        _date.value = TextEditingValue(
-            text: '${birth_date.day}-${birth_date.month}-${birth_date.year}');
-      });
-  }
-
-  Widget buildPersonalData() {
+  Widget buildPersonalData(User user) {
     return Container(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,10 +47,10 @@ class _AccProfilePageState extends State<AccProfilePage> {
                 ),
                 Container(
                   // margin: const EdgeInsets.symmetric(horizontal: 5),
-                  width: 200,
+                  width: 250,
                   child: TextFormField(
                     style: TextStyle(fontSize: 18),
-                    initialValue: 'Иванов',
+                    initialValue: user.lastname,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                     ),
@@ -80,10 +72,10 @@ class _AccProfilePageState extends State<AccProfilePage> {
                 ),
                 Container(
                   // margin: const EdgeInsets.symmetric(horizontal: 5),
-                  width: 200,
+                  width: 250,
                   child: TextFormField(
                     style: TextStyle(fontSize: 18),
-                    initialValue: 'Иван',
+                    initialValue: user.firstname,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                     ),
@@ -98,17 +90,17 @@ class _AccProfilePageState extends State<AccProfilePage> {
               children: [
                 SizedBox(
                   child: Text(
-                    'Отчество:',
+                    'Email:',
                     style: TextStyle(fontSize: 18),
                   ),
                   width: 100,
                 ),
                 Container(
                   // margin: const EdgeInsets.symmetric(horizontal: 5),
-                  width: 200,
+                  width: 250,
                   child: TextFormField(
                     style: TextStyle(fontSize: 18),
-                    initialValue: 'Иванович',
+                    initialValue: user.email,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                     ),
@@ -117,46 +109,16 @@ class _AccProfilePageState extends State<AccProfilePage> {
               ],
             ),
           ),
-          Container(
-            child: Row(
-              children: [
-                SizedBox(
-                  child: Text(
-                    'Дата рождения:',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  width: 100,
-                ),
-                Container(
-                    // margin: const EdgeInsets.symmetric(horizontal: 5),
-                    width: 200,
-                    child: GestureDetector(
-                      onTap: () => _selectDate(context),
-                      child: AbsorbPointer(
-                        child: TextFormField(
-                          style: TextStyle(fontSize: 18),
-                          // initialValue: '',
-                          controller: _date,
-                          keyboardType: TextInputType.datetime,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ))
-              ],
-            ),
-          ),
         ]));
   }
 
-  Widget buildGameStat() {
+  Widget buildGameStat(User user) {
     return Container(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
           Text(
-            'Сыгранных партий - 100',
+            'Сыгранных партий - ' + user.allgames.toString(),
             style: TextStyle(
               fontFamily: 'Josefin-sans',
               fontWeight: FontWeight.bold,
@@ -170,14 +132,14 @@ class _AccProfilePageState extends State<AccProfilePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Побед - 50',
+                  'Побед - ' + user.wins.toString(),
                   style: TextStyle(
                     color: Colors.green,
                     fontSize: 18,
                   ),
                 ),
                 Text(
-                  'Поражений - 50',
+                  'Поражений - ' + user.loses.toString(),
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 18,
@@ -191,7 +153,7 @@ class _AccProfilePageState extends State<AccProfilePage> {
             child: Row(
               children: [
                 Expanded(
-                    flex: 5,
+                    flex: user.wins.isInfinite?5:user.wins,
                     child: Container(
                       // width: MediaQuery.of(context).size.width * 0.5,
                       height: 20,
@@ -203,7 +165,7 @@ class _AccProfilePageState extends State<AccProfilePage> {
                       ),
                     )),
                 Expanded(
-                    flex: 5,
+                    flex: user.wins.isInfinite?5:user.loses,
                     child: Container(
                       // width: MediaQuery.of(context).size.width * 0.5,
                       height: 20,
@@ -222,6 +184,8 @@ class _AccProfilePageState extends State<AccProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final ScreenArguments screenArguments = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
+    User user = screenArguments.user;
     return Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
@@ -252,8 +216,8 @@ class _AccProfilePageState extends State<AccProfilePage> {
                             width: 200,
                             margin: const EdgeInsets.only(left: 20),
                             child: TextFormField(
-                              initialValue: 'Имя пользователя',
-                              minLines: 2,
+                              initialValue: user.username,
+                              minLines: 1,
                               maxLines: 2,
                               style: TextStyle(
                                   fontSize: 20,
@@ -270,11 +234,11 @@ class _AccProfilePageState extends State<AccProfilePage> {
                       ),
                     ),
                   ),
-                  buildPersonalData(),
+                  buildPersonalData(user),
                   SizedBox(
                     height: 10,
                   ),
-                  buildGameStat(),
+                  buildGameStat(user),
               ],
           ),
         ),
